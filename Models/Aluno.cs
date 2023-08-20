@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 
 namespace WEBMVC.Models
 {
@@ -13,10 +14,10 @@ namespace WEBMVC.Models
         [StringLength(35)]
         public string nome { get; set; }
 
-        [StringLength(30)]
-        public string disciplina { get; set; }
+        public DateTime aniversario { get; set; }
 
-        public float nota1 { get; set; }
-        public float nota2 { get; set; }
+        public Curso curso { get; set; }
+
+        public string periodo { get; set; }
     }
 }

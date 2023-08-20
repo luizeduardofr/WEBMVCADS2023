@@ -9,85 +9,85 @@ using WEBMVC.Models;
 
 namespace WEBMVC.Controllers
 {
-    public class AlunosController : Controller
+    public class SalasController : Controller
     {
         private readonly Contexto _context;
 
-        public AlunosController(Contexto context)
+        public SalasController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: Alunos
+        // GET: Salas
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Alunos.ToListAsync());
+              return View(await _context.Salas.ToListAsync());
         }
 
-        // GET: Alunos/Details/5
+        // GET: Salas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Alunos == null)
+            if (id == null || _context.Salas == null)
             {
                 return NotFound();
             }
 
-            var aluno = await _context.Alunos
+            var sala = await _context.Salas
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (aluno == null)
+            if (sala == null)
             {
                 return NotFound();
             }
 
-            return View(aluno);
+            return View(sala);
         }
 
-        // GET: Alunos/Create
+        // GET: Salas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Alunos/Create
+        // POST: Salas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,aniversario,periodo")] Aluno aluno)
+        public async Task<IActionResult> Create([Bind("id,descricao,equipamentos,situacao")] Sala sala)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(aluno);
+                _context.Add(sala);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(aluno);
+            return View(sala);
         }
 
-        // GET: Alunos/Edit/5
+        // GET: Salas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Alunos == null)
+            if (id == null || _context.Salas == null)
             {
                 return NotFound();
             }
 
-            var aluno = await _context.Alunos.FindAsync(id);
-            if (aluno == null)
+            var sala = await _context.Salas.FindAsync(id);
+            if (sala == null)
             {
                 return NotFound();
             }
-            return View(aluno);
+            return View(sala);
         }
 
-        // POST: Alunos/Edit/5
+        // POST: Salas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,aniversario,periodo")] Aluno aluno)
+        public async Task<IActionResult> Edit(int id, [Bind("id,descricao,equipamentos,situacao")] Sala sala)
         {
-            if (id != aluno.id)
+            if (id != sala.id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace WEBMVC.Controllers
             {
                 try
                 {
-                    _context.Update(aluno);
+                    _context.Update(sala);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AlunoExists(aluno.id))
+                    if (!SalaExists(sala.id))
                     {
                         return NotFound();
                     }
@@ -112,49 +112,49 @@ namespace WEBMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(aluno);
+            return View(sala);
         }
 
-        // GET: Alunos/Delete/5
+        // GET: Salas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Alunos == null)
+            if (id == null || _context.Salas == null)
             {
                 return NotFound();
             }
 
-            var aluno = await _context.Alunos
+            var sala = await _context.Salas
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (aluno == null)
+            if (sala == null)
             {
                 return NotFound();
             }
 
-            return View(aluno);
+            return View(sala);
         }
 
-        // POST: Alunos/Delete/5
+        // POST: Salas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Alunos == null)
+            if (_context.Salas == null)
             {
-                return Problem("Entity set 'Contexto.Alunos'  is null.");
+                return Problem("Entity set 'Contexto.Salas'  is null.");
             }
-            var aluno = await _context.Alunos.FindAsync(id);
-            if (aluno != null)
+            var sala = await _context.Salas.FindAsync(id);
+            if (sala != null)
             {
-                _context.Alunos.Remove(aluno);
+                _context.Salas.Remove(sala);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AlunoExists(int id)
+        private bool SalaExists(int id)
         {
-          return _context.Alunos.Any(e => e.id == id);
+          return _context.Salas.Any(e => e.id == id);
         }
     }
 }

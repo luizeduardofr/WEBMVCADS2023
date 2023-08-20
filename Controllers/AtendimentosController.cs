@@ -9,85 +9,85 @@ using WEBMVC.Models;
 
 namespace WEBMVC.Controllers
 {
-    public class AlunosController : Controller
+    public class AtendimentosController : Controller
     {
         private readonly Contexto _context;
 
-        public AlunosController(Contexto context)
+        public AtendimentosController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: Alunos
+        // GET: Atendimentos
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Alunos.ToListAsync());
+              return View(await _context.Atendimentos.ToListAsync());
         }
 
-        // GET: Alunos/Details/5
+        // GET: Atendimentos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Alunos == null)
+            if (id == null || _context.Atendimentos == null)
             {
                 return NotFound();
             }
 
-            var aluno = await _context.Alunos
+            var atendimento = await _context.Atendimentos
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (aluno == null)
+            if (atendimento == null)
             {
                 return NotFound();
             }
 
-            return View(aluno);
+            return View(atendimento);
         }
 
-        // GET: Alunos/Create
+        // GET: Atendimentos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Alunos/Create
+        // POST: Atendimentos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,aniversario,periodo")] Aluno aluno)
+        public async Task<IActionResult> Create([Bind("id,data")] Atendimento atendimento)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(aluno);
+                _context.Add(atendimento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(aluno);
+            return View(atendimento);
         }
 
-        // GET: Alunos/Edit/5
+        // GET: Atendimentos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Alunos == null)
+            if (id == null || _context.Atendimentos == null)
             {
                 return NotFound();
             }
 
-            var aluno = await _context.Alunos.FindAsync(id);
-            if (aluno == null)
+            var atendimento = await _context.Atendimentos.FindAsync(id);
+            if (atendimento == null)
             {
                 return NotFound();
             }
-            return View(aluno);
+            return View(atendimento);
         }
 
-        // POST: Alunos/Edit/5
+        // POST: Atendimentos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,aniversario,periodo")] Aluno aluno)
+        public async Task<IActionResult> Edit(int id, [Bind("id,data")] Atendimento atendimento)
         {
-            if (id != aluno.id)
+            if (id != atendimento.id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace WEBMVC.Controllers
             {
                 try
                 {
-                    _context.Update(aluno);
+                    _context.Update(atendimento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AlunoExists(aluno.id))
+                    if (!AtendimentoExists(atendimento.id))
                     {
                         return NotFound();
                     }
@@ -112,49 +112,49 @@ namespace WEBMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(aluno);
+            return View(atendimento);
         }
 
-        // GET: Alunos/Delete/5
+        // GET: Atendimentos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Alunos == null)
+            if (id == null || _context.Atendimentos == null)
             {
                 return NotFound();
             }
 
-            var aluno = await _context.Alunos
+            var atendimento = await _context.Atendimentos
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (aluno == null)
+            if (atendimento == null)
             {
                 return NotFound();
             }
 
-            return View(aluno);
+            return View(atendimento);
         }
 
-        // POST: Alunos/Delete/5
+        // POST: Atendimentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Alunos == null)
+            if (_context.Atendimentos == null)
             {
-                return Problem("Entity set 'Contexto.Alunos'  is null.");
+                return Problem("Entity set 'Contexto.Atendimentos'  is null.");
             }
-            var aluno = await _context.Alunos.FindAsync(id);
-            if (aluno != null)
+            var atendimento = await _context.Atendimentos.FindAsync(id);
+            if (atendimento != null)
             {
-                _context.Alunos.Remove(aluno);
+                _context.Atendimentos.Remove(atendimento);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AlunoExists(int id)
+        private bool AtendimentoExists(int id)
         {
-          return _context.Alunos.Any(e => e.id == id);
+          return _context.Atendimentos.Any(e => e.id == id);
         }
     }
 }
