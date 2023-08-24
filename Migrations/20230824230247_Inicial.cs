@@ -31,8 +31,9 @@ namespace WEBMVC.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     descricao = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
+                    monitor = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     equipamentos = table.Column<int>(type: "int", nullable: false),
-                    situacao = table.Column<string>(type: "nvarchar(1)", nullable: false)
+                    situacao = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,17 +48,19 @@ namespace WEBMVC.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nome = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     aniversario = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    cursoid = table.Column<int>(type: "int", nullable: true),
-                    periodo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cursoID = table.Column<int>(type: "int", nullable: false),
+                    periodo = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Alunos", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Alunos_Cursos_cursoid",
-                        column: x => x.cursoid,
+                        name: "FK_Alunos_Cursos_cursoID",
+                        column: x => x.cursoID,
                         principalTable: "Cursos",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,9 +89,9 @@ namespace WEBMVC.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alunos_cursoid",
+                name: "IX_Alunos_cursoID",
                 table: "Alunos",
-                column: "cursoid");
+                column: "cursoID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Atendimentos_alunoid",

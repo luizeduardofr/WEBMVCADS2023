@@ -53,7 +53,7 @@ namespace WEBMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,descricao,equipamentos,situacao")] Sala sala)
+        public async Task<IActionResult> Create([Bind("id,descricao,monitor,equipamentos,situacao")] Sala sala)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace WEBMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,descricao,equipamentos,situacao")] Sala sala)
+        public async Task<IActionResult> Edit(int id, [Bind("id,descricao,monitor,equipamentos,situacao")] Sala sala)
         {
             if (id != sala.id)
             {

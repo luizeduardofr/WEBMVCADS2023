@@ -21,7 +21,8 @@ namespace WEBMVC.Controllers
         // GET: Alunos
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Alunos.ToListAsync());
+            var contexto = _context.Alunos.Include(a => a.curso);
+            return View(await contexto.ToListAsync());
         }
 
         // GET: Alunos/Details/5
@@ -33,6 +34,7 @@ namespace WEBMVC.Controllers
             }
 
             var aluno = await _context.Alunos
+                .Include(a => a.curso)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (aluno == null)
             {
@@ -45,6 +47,7 @@ namespace WEBMVC.Controllers
         // GET: Alunos/Create
         public IActionResult Create()
         {
+            ViewData["cursoID"] = new SelectList(_context.Cursos, "id", "descricao");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace WEBMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,aniversario,periodo")] Aluno aluno)
+        public async Task<IActionResult> Create([Bind("id,nome,aniversario,email,cursoID,periodo")] Aluno aluno)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace WEBMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["cursoID"] = new SelectList(_context.Cursos, "id", "descricao", aluno.cursoID);
             return View(aluno);
         }
 
@@ -77,6 +81,7 @@ namespace WEBMVC.Controllers
             {
                 return NotFound();
             }
+            ViewData["cursoID"] = new SelectList(_context.Cursos, "id", "descricao", aluno.cursoID);
             return View(aluno);
         }
 
@@ -85,7 +90,7 @@ namespace WEBMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,aniversario,periodo")] Aluno aluno)
+        public async Task<IActionResult> Edit(int id, [Bind("id,nome,aniversario,email,cursoID,periodo")] Aluno aluno)
         {
             if (id != aluno.id)
             {
@@ -112,6 +117,7 @@ namespace WEBMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["cursoID"] = new SelectList(_context.Cursos, "id", "descricao", aluno.cursoID);
             return View(aluno);
         }
 
@@ -124,6 +130,7 @@ namespace WEBMVC.Controllers
             }
 
             var aluno = await _context.Alunos
+                .Include(a => a.curso)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (aluno == null)
             {

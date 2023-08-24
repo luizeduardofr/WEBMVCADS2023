@@ -8,10 +8,12 @@ namespace WEBMVC.Models
     public class Curso
     {
         [Key]
+        [Display(Name ="ID")]
         public int id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Campo Descrição é obrigatório.")]
         [StringLength(35)]
+        [Display(Name ="Descrição")]
         public string descricao { get; set; }
     }
 }

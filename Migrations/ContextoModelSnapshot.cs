@@ -33,8 +33,12 @@ namespace WEBMVC.Migrations
                     b.Property<DateTime>("aniversario")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("cursoid")
+                    b.Property<int>("cursoID")
                         .HasColumnType("int");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nome")
                         .IsRequired()
@@ -42,11 +46,12 @@ namespace WEBMVC.Migrations
                         .HasColumnType("nvarchar(35)");
 
                     b.Property<string>("periodo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
-                    b.HasIndex("cursoid");
+                    b.HasIndex("cursoID");
 
                     b.ToTable("Alunos");
                 });
@@ -111,9 +116,13 @@ namespace WEBMVC.Migrations
                     b.Property<int>("equipamentos")
                         .HasColumnType("int");
 
-                    b.Property<string>("situacao")
+                    b.Property<string>("monitor")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("situacao")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
@@ -124,7 +133,9 @@ namespace WEBMVC.Migrations
                 {
                     b.HasOne("WEBMVC.Models.Curso", "curso")
                         .WithMany()
-                        .HasForeignKey("cursoid");
+                        .HasForeignKey("cursoID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("curso");
                 });
